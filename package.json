@@ -1,0 +1,39 @@
+{
+  "name": "markdown-repository",
+  "version": "0.0.1",
+  "description": "Helper to work with markdown files as content repository",
+  "repository": "https://github.com/jurijtokarski/markdown-repository",
+  "author": "J. T. <jurij@jurijtokarski.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "yarn build",
+    "build": "tsc",
+    "test": "jest --modulePaths=src",
+    "test-coverage": "yarn test --collect-coverage",
+    "test-watch": "yarn test --watch",
+    "lint": "eslint '**/*.ts'",
+    "lint-fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.5",
+    "@types/node": "^18.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "eslint": "^8.19.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.6",
+    "typescript": "^4.7.4"
+  }
+}

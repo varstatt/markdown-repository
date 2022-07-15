@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": [
+      "es5",
+      "esnext"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
