@@ -1,14 +1,6 @@
-# NPM package template
+# markdown-repository
 
-Template I use to create new NPM packages.
-
-## What's included?
-
-- TypeScript support
-- Unit-tests with coverage report (Mocha, Chai, Instanbul/NYC)
-- Linter with semistandard config and TypeScript support (ESLint)
-- CI pipeline to run tests and linter on push/pull-request
-- CI pipeline to publish package to NPM on new GitHub release
+Helper to work with markdown files as content repository
 
 ## Available scripts
 
@@ -18,8 +10,3 @@ Template I use to create new NPM packages.
 1. `test-coverage` runs unit-tests with coverage report
 1. `lint` checks code-style of source files
 1. `lint-fix` checks code-style and automatically fixes some issues
-
-## References
-
-- [MIT licence](./LICENSE)
-- [How to contribute](./CONTRIBUTING.md)
