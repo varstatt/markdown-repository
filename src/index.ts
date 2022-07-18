@@ -7,11 +7,13 @@ export class MarkdownRepositoryNotFoundError extends Error { }
 
 export class MarkdownRepositoryInvalidTypeError extends Error { }
 
+type Value = string | number | Date;
+
 export interface MarkdownItem {
   slug: string
   content: string
   excerpt: string
-  [key: string]: string | number | Date
+  [key: string]: Value | Record<string, Value> | Array<Record<string, Value>>
 }
 
 const MARKDOWN_EXTENSION = ".md";

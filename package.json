@@ -1,6 +1,6 @@
 {
   "name": "markdown-repository",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helper to work with markdown files as content repository",
   "repository": "https://github.com/jurijtokarski/markdown-repository",
   "author": "J. T. <jurij@jurijtokarski.com>",
