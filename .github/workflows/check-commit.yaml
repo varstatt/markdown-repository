@@ -8,7 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - run: echo ${{ toJSON(github.event) }}
+      - run: echo ${{ github.event_name }}
+      - run: echo ${{ github.event.push.after }}
+      - run: echo ${{ github.event.push.commits }}
       - run: yarn
       - run: yarn lint
       - run: yarn test-coverage
