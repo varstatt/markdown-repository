@@ -409,6 +409,24 @@ export default async function PrinciplePage({ params }) {
 }
 ```
 
+### Deploying to Vercel
+
+`markdown-repository` reads files from disk at runtime using `fs.readdirSync`. Next.js's output file tracing can't detect these paths automatically because they're passed as strings to the constructor, not as static imports.
+
+Add `outputFileTracingIncludes` to your `next.config.mjs` so the content directories are bundled into the serverless function:
+
+```javascript
+// next.config.mjs
+const nextConfig = {
+  outputFileTracingIncludes: {
+    "/blog/*": ["./content/posts/**"],
+    "/docs/*": ["./content/docs/**"],
+  },
+};
+```
+
+The keys are route patterns, the values are glob patterns for the directories your repositories read from. Without this, you'll get `ENOENT: no such file or directory, scandir` errors in production.
+
 ## MarkdownItem shape
 
 Every item returned by `get()` has this base shape:
