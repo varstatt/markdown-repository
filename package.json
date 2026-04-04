@@ -1,39 +1,67 @@
 {
   "name": "markdown-repository",
-  "version": "0.1.1",
-  "description": "Helper to work with markdown files as content repository",
-  "repository": "https://github.com/jurijtokarski/markdown-repository",
-  "author": "J. T. <jurij@jurijtokarski.com>",
+  "version": "1.0.0",
+  "description": "Use markdown files like a database. Firestore-style query builder for .md and .mdx files with frontmatter.",
+  "keywords": [
+    "markdown",
+    "mdx",
+    "frontmatter",
+    "repository",
+    "query",
+    "cms",
+    "content",
+    "gray-matter",
+    "static-site",
+    "firestore"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varstatt/markdown-repository"
+  },
+  "homepage": "https://github.com/varstatt/markdown-repository#readme",
+  "bugs": {
+    "url": "https://github.com/varstatt/markdown-repository/issues"
+  },
+  "author": "Jurij Tokarski <jurij@varstatt.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "prepack": "yarn build",
     "build": "tsc",
     "test": "jest --modulePaths=src",
-    "test-coverage": "yarn test --collect-coverage",
-    "test-watch": "yarn test --watch",
-    "lint": "eslint '**/*.ts'",
-    "lint-fix": "yarn lint --fix"
+    "test:coverage": "jest --modulePaths=src --coverage",
+    "test:watch": "jest --modulePaths=src --watch",
+    "lint": "biome check src/",
+    "format": "biome check --write src/",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^28.1.5",
-    "@types/node": "^18.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "eslint": "^8.19.0",
-    "eslint-config-standard-with-typescript": "^22.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "jest": "^28.1.3",
-    "ts-jest": "^28.0.6",
-    "typescript": "^4.7.4"
+    "@biomejs/biome": "^2.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.0"
   }
 }

@@ -1,17 +1,21 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  CommitCheck:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - run: echo ${{ github.event_name }}
-      - run: echo ${{ github.event.push.after }}
-      - run: echo ${{ github.event.push.commits }}
-      - run: yarn
-      - run: yarn lint
-      - run: yarn test-coverage
-      - run: yarn build
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:coverage
+      - run: npm run build

@@ -1,9 +1,0 @@
-/src
-/dist/**/*.spec.js
-/dist/**/*.spec.d.ts
-/coverage
-.eslint*
-.git*
-yarn*
-README.md
-tsconfig.json

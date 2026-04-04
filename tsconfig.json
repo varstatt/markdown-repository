@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "strict": true,
-    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "declaration": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "declarationMap": true,
     "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
     "outDir": "dist",
-    "lib": [
-      "es5",
-      "esnext"
-    ]
+    "lib": ["ES2020"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.mock.ts"]
 }
