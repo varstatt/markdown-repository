@@ -1,4 +1,4 @@
-# Markdown Repository
+# [Markdown Repository](https://varstatt.com/toolkit/markdown-repository)
 
 Use markdown files like a database. Read directories of `.md` or `.mdx` files, query them by frontmatter fields, sort, filter, and limit — with an API modeled after Firestore.
 
@@ -444,6 +444,12 @@ try {
 }
 ```
 
-## License
+## About
 
-MIT
+Built and maintained by [Jurij Tokarski](https://varstatt.com/jurij) from [Varstatt](https://varstatt.com). MIT licensed.
+
+- [Docs](https://varstatt.github.io/markdown-repository/)
+- [Examples](https://varstatt.com/toolkit/markdown-repository)
+- [GitHub](https://github.com/varstatt/markdown-repository)
+- [npm](https://www.npmjs.com/package/markdown-repository)
+- [Issues](https://github.com/varstatt/markdown-repository/issues)
