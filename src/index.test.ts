@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import {
   get,
   limit,
@@ -1131,6 +1134,114 @@ describe("error handling", () => {
     }
 
     expect(caughtType).toEqual("invalid-type");
+  });
+});
+
+// ============================================================
+// Directory resolution — relative and absolute directories
+// ============================================================
+
+describe("directory resolution", () => {
+  let tmp: string;
+  let appDir: string;
+  let sharedDir: string;
+  let leadingSlashName: string;
+
+  function writePost(dir: string, name: string, title: string): void {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(
+      path.join(dir, `${name}.md`),
+      `---\ntitle: ${title}\n---\n${title} body`,
+    );
+  }
+
+  beforeAll(() => {
+    tmp = fs.realpathSync(
+      fs.mkdtempSync(path.join(os.tmpdir(), "markdown-repository-")),
+    );
+    appDir = path.join(tmp, "app");
+    sharedDir = path.join(tmp, "shared", "posts");
+    leadingSlashName = `leading-slash-${path.basename(tmp)}`;
+
+    writePost(path.join(appDir, "content", "posts"), "in-app", "In app");
+    writePost(sharedDir, "in-shared", "In shared");
+    writePost(path.join(sharedDir, "nested"), "deep", "Deep");
+    writePost(path.join(appDir, leadingSlashName, "posts"), "in-app", "In app");
+  });
+
+  beforeEach(() => {
+    jest.spyOn(process, "cwd").mockReturnValue(appDir);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  afterAll(() => {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  });
+
+  it("resolves a relative directory against process.cwd()", () => {
+    const repo = new MarkdownRepository("content/posts");
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual(["in-app"]);
+    expect(repo.getBySlug("in-app").content).toEqual("In app body");
+  });
+
+  it("resolves a relative directory that points outside cwd", () => {
+    const repo = new MarkdownRepository("../shared/posts");
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual(["in-shared"]);
+  });
+
+  it("reads an absolute directory outside process.cwd()", () => {
+    const repo = new MarkdownRepository(sharedDir);
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual(["in-shared"]);
+    expect(repo.getBySlug("in-shared").content).toEqual("In shared body");
+  });
+
+  it("reads an absolute directory inside process.cwd()", () => {
+    const repo = new MarkdownRepository(path.join(appDir, "content", "posts"));
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual(["in-app"]);
+    expect(repo.getBySlug("in-app").content).toEqual("In app body");
+  });
+
+  it("reads an absolute directory with a trailing separator", () => {
+    const repo = new MarkdownRepository(`${sharedDir}${path.sep}`);
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual(["in-shared"]);
+  });
+
+  it("keeps slugs relative to the directory for an absolute recursive repository", () => {
+    const repo = new MarkdownRepository(sharedDir, { recursive: true });
+
+    expect(repo.getAll().map((p) => p.slug)).toEqual([
+      "in-shared",
+      "nested/deep",
+    ]);
+    expect(repo.getBySlug("nested/deep").content).toEqual("Deep body");
+  });
+
+  it("reports a missing absolute directory by its own path, not nested under cwd", () => {
+    const missing = path.join(tmp, "does-not-exist");
+    const repo = new MarkdownRepository(missing);
+
+    expect(() => repo.getAll()).toThrow(`scandir '${missing}'`);
+  });
+
+  it("treats a leading-slash directory as absolute, not as relative to cwd", () => {
+    // Before the fix "/x/posts" silently meant "<cwd>/x/posts".
+    expect(
+      new MarkdownRepository(`${leadingSlashName}/posts`).getAll(),
+    ).toHaveLength(1);
+
+    const leadingSlash = new MarkdownRepository(`/${leadingSlashName}/posts`);
+
+    expect(() => leadingSlash.getAll()).toThrow(
+      `scandir '${path.resolve(`/${leadingSlashName}/posts`)}'`,
+    );
   });
 });
 

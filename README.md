@@ -64,6 +64,8 @@ const recent = get(
 const repo = new MarkdownRepository(directory, options);
 ```
 
+`directory` is either relative to `process.cwd()` (`"content/posts"`, `"../shared/posts"`) or absolute (`path.resolve(...)`, a value from a config file or an environment variable). A leading slash means an absolute path, not a path relative to the project root, and `~` is not expanded.
+
 | Option | Type | Default | Description |
 |---|---|---|---|
 | `extensions` | `string[]` | `[".md"]` | File extensions to include |
