@@ -68,11 +68,13 @@ const repo = new MarkdownRepository(directory, options);
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `extensions` | `string[]` | `[".md"]` | File extensions to include |
+| `extensions` | `string[]` | `[".md", ".mdx"]` | File extensions to include |
 | `recursive` | `boolean` | `false` | Traverse subdirectories |
 | `validator` | `(item) => item is T` | accepts all | Type guard for content validation |
 
 ### MDX files
+
+Both `.md` and `.mdx` files are read by default. To read only MDX files:
 
 ```javascript
 const posts = new MarkdownRepository("content/posts", {
