@@ -246,7 +246,8 @@ export class MarkdownRepository<T extends MarkdownItem = MarkdownItem> {
   }
 
   private getDirectoryPath(): string {
-    return path.join(process.cwd(), this.directory);
+    // resolve (not join): an absolute directory must not be nested under cwd
+    return path.resolve(process.cwd(), this.directory);
   }
 
   private isMarkdownFile(fileName: string): boolean {
